@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>test app</title>
+    </head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+<style>
+    body {
+  font-family: "Roboto", sans-serif;
+  
+}
+body {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+table, td, th {
+    width: 100%;
+    border:1px solid white;
+    color:white;
+    border-collapse: collapse;
+    font-size:30px
+}
+</style>
+    <body>
+        <h1>test test test test test</h1>
+        <input type="text" id="1">
+        <input type="button" id="submit" onclick='submit()'>
+        <label id="2">sdadasd</label>
+        <table>
+            <thead>
+                <tr>
+                    <th>lvl</th>
+                    <th>ign</th>
+                    <th>tag</th>
+                </tr>
+            </thead>
+
+            <tbody id='overlay'>
+            </tbody>
+
+        </table>
+
+
+
+    <script src='overlaycodetest.js'></script>
+    
+    </body>
+    <script>
+var windowTopBar = document.createElement('div')
+windowTopBar.style.width = "100%"
+windowTopBar.style.height = "32px"
+windowTopBar.style.backgroundColor = "transparent"
+windowTopBar.style.position = "absolute"
+windowTopBar.style.top = windowTopBar.style.left = 0
+windowTopBar.style.webkitAppRegion = "drag"
+document.body.appendChild(windowTopBar)
+    </script>
+</html>

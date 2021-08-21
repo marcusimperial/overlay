@@ -1,0 +1,47 @@
+{
+  "name": "overlaytest",
+  "version": "1.0.0",
+  "description": "sdad",
+  "main": "index.cjs",
+  "type": "module",
+  "scripts": {
+    "start": "electron .",
+    "build-installer": "electron-builder"
+  },
+  "build": {
+    "appId": "cool-app",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/icons/win/icon.ico"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "assets/icons/win/icon.ico"
+    },
+    "dmg": {
+      "icon": "assets/icons/win/icon.ico"
+    },
+    "nsis": {
+      "installerIcon": "assets/icons/win/icon.ico",
+      "uninstallerIcon": "assets/icons/win/icon.ico",
+      "uninstallDisplayName": "CPU Monitor",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "author": "dare",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^4.0.1",
+    "read-last-lines": "^1.8.0"
+  },
+  "devDependencies": {
+    "electron": "^13.1.4",
+    "electron-builder": "^22.11.7",
+    "node-key-sender": "^1.0.11"
+  }
+}

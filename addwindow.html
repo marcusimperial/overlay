@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>test app</title>
+    </head>
+
+    <body>
+        <h1>test test test test test</h1>
+        <input type="text" id="1">
+        <input type="button" id="submit">
+        <label id="2">sdadasd</label>
+
+
+
+        <script>
+            const electron = require('electron');
+            const {ipcRenderer} = electron;
+
+
+            var button = document.getElementById("submit");
+            var label = document.getElementById("2");
+            label = 'okokko';
+            alert(button);
+            button.addEventListener('click', getvalue)
+
+            function getvalue(){
+                var value = document.getElementById("1").value;
+                alert(value);
+                ipcRenderer.send('ok', value);
+                
+
+            }
+
+        </script>
+    </body>
+
+
+</html>
