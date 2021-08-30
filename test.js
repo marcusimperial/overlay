@@ -1,33 +1,15 @@
-import http from 'http';
-async function getBwstatsTag(player){
-    const options = {
-        host: 'db.dfg87dcbvse44.xyz',
-        port: 8080,
-        path: `/?playerv5=${player}`,
-        method: 'GET',
-        timeout: 3000
-    }
-    const req = http.request(options, res => {
-        let data = '';
-        res.on('data', (chunk) => {
-            data += chunk;
-        });
-        res.on('end', () => {
-            if (data == "") return;
-            else {
-                let clean = data.toLowerCase().replace(/'/g,'"');
-                let parse = JSON.parse(clean);
-                console.log(parse.sniper)
-            }
-        });
-    });
-    req.on('error', () =>{
-        return;
-    });
-    req.on('timeout', () => {
-        return 'timeout'
-    });
-    req.end();
-}
+var __POSTS = [ 
+	{ id: 1, title: 'Apple', description: 'Description of post 1' }, 
+	{ id: 2, title: 'Orange', description: 'Description of post 2' }, 
+	{ id: 3, title: 'Guava', description: 'Description of post 3' }, 
+	{ id: 4, title: 'Banana', description: 'Description of post 4' }
+];
 
-getBwstatsTag('aynobody');
+var __FOUND = __POSTS.find((obj) => obj.title === 'Guava').description;
+
+// On success __FOUND will contain the complete element (an object)
+// On failure it will contain undefined  
+console.log(__FOUND); // { id: 3, title: 'Guava', description: 'Description of post 3' }
+
+let cache = ['1'];
+console.log(cache)

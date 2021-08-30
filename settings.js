@@ -24,3 +24,15 @@ function verifySettings(key, client){
         console.log(ok);
 }
 validatesettings('3ee4ea82-d2a4-43bc-bbf1-8b62cfdb7e14');
+
+
+async function verifyToken(key) {
+    try {
+        const a = await fetch(`https://api.hypixel.net/key?key=${key}`);
+        if(a) localStorage.setItem('key', key);
+        
+    } catch {
+
+    }
+
+}

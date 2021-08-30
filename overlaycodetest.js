@@ -59,6 +59,7 @@ async function analyzeLine(latest){
         }
     }
 }
+
 function saveSettings(key){
     const file = './settings.json';
     const rawdata = fs.readFileSync(file);
@@ -73,14 +74,13 @@ function saveSettings(key){
 }
 
 async function sortTable() {
-    var table, rows, switching, i, x, y, shouldSwitch;
+    var table, rows, i, x, y;
     table = document.getElementById("overlay");
       rows = table.rows;
       /* Loop through all table rows (except the
       first, which contains table headers): */
       for (i = 0; i < (rows.length - 1); i++) {
         // Start by saying there should be no switching:
-        shouldSwitch = false;
         /* Get the two elements you want to compare,
         one from current row and one from the next: */
         x = parseInt(rows[i].getElementsByTagName("TD")[0].innerHTML);
@@ -90,8 +90,8 @@ async function sortTable() {
           // If so, mark as a switch and break the loop:
           rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
         }
-      }
-  }
+    }
+}
 
 async function appendToDisplay(player, level){
     console.log(player);

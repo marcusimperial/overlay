@@ -1,5 +1,5 @@
 {
-  "name": "overlaytest",
+  "name": "overlay",
   "version": "1.0.0",
   "description": "sdad",
   "main": "index.cjs",
@@ -36,7 +36,9 @@
   "author": "dare",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "mongodb": "^4.0.1",
+    "node-fetch": "^2.6.1",
     "read-last-lines": "^1.8.0"
   },
   "devDependencies": {

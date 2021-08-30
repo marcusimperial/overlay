@@ -3,47 +3,70 @@
         <title>test app</title>
     </head>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Roboto", sans-serif;
+            font-size: 10px;
+            margin:0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        table, td, th {
+            border:1px solid white;
+            color:white;
+            border-collapse: collapse;
+            font-size:18px;
+            white-space:nowrap;
+        }
 
-<style>
-    body {
-  font-family: "Roboto", sans-serif;
-  
-}
-body {
-  background: rgba(0, 0, 0, 0.5);
-}
+        td, th {
+            text-align:center;
+            padding:3px;
+        }
+    </style>
+    <script>
+        console.log(localStorage.getItem('ok'));
+        async function test(){
+            localStorage.setItem('ok', 'HEY TEST');
 
-table, td, th {
-    width: 100%;
-    border:1px solid white;
-    color:white;
-    border-collapse: collapse;
-    font-size:30px
-}
-</style>
+            const electron = require('electron');
+        const {ipcRenderer} = electron;
+        ipcRenderer.send('ok');
+        }
+
+        document.getElementById('overlay').insertRow(0).id = 's';
+    </script>
     <body>
         <h1>test test test test test</h1>
         <input type="text" id="1">
-        <input type="button" id="submit" onclick='submit()'>
+        <input type="button" id="submit" value="SUBMIT" onclick='test()'>
         <label id="2">sdadasd</label>
         <table>
             <thead>
                 <tr>
-                    <th>lvl</th>
-                    <th>ign</th>
-                    <th>tag</th>
+                    <th>Player</th>
+                    <th>Star</th>
+                    <th>Tag</th>
+                    <th>WS</th>
+                    <th>Session</th>
+                    <th>FKDR</th>
+                    <th>KDR</th>
+                    <th>WLR</th>
+                    <th>BBLR</th>
+                    <th>FKills</th>
+                    <th>FDeaths</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
                 </tr>
             </thead>
-
             <tbody id='overlay'>
             </tbody>
-
         </table>
 
 
-
-    <script src='overlaycodetest.js'></script>
-    
+    <script src='process.js'></script>
+    <script src='display.js'></script>
+    <script src='system.js'></script>
+    <script src='main.js'></script>
     </body>
     <script>
 var windowTopBar = document.createElement('div')
