@@ -53,18 +53,18 @@ async function compileStats(data){
     const type = "real";
     const name = data.displayname;
     const date = Date.now();
-    const session = ((((date - data.lastLogin))/1000)/60).toFixed(1);
+    const session = ((((date - data.lastLogin))/1000)/60).toFixed(1) ?? 0;
     const star = data.achievements.bedwars_level;
     const kdr = (data.stats.Bedwars.kills_bedwars/
-        data.stats.Bedwars.deaths_bedwars).toFixed(2);
+        data.stats.Bedwars.deaths_bedwars).toFixed(2) ?? 0;
     const fkills = data.stats.Bedwars.final_kills_bedwars;
     const fdeaths = data.stats.Bedwars.final_deaths_bedwars;
-    const fkdr = (fkills/fdeaths).toFixed(2);
+    const fkdr = (fkills/fdeaths).toFixed(2) ?? 0;
     const wins = data.stats.Bedwars.wins_bedwars;
     const losses = data.stats.Bedwars.losses_bedwars;
-    const wlr = (wins/losses).toFixed(2);
+    const wlr = (wins/losses).toFixed(2) ?? 0;
     const bblr = (data.stats.Bedwars.beds_broken_bedwars/
-        data.stats.Bedwars.beds_lost_bedwars).toFixed(2);
+        data.stats.Bedwars.beds_lost_bedwars).toFixed(2) ?? 0;
     const ws = data.stats.Bedwars.winstreak; 
     return {
         type:type,date:date, name:name, session:session, 

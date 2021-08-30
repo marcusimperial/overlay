@@ -1,7 +1,7 @@
 async function clearCache(){
     const timeout = 10000; //ms
     for(let i=0; i<cache.length; i++){
-        if(Date.now() >= cache[i].time + timeout) {
+        if(Date.now() >= cache[i].date + timeout) {
             console.log(`Cleared for ${cache[i].name}`)
             cache.splice(i, 1)
         }

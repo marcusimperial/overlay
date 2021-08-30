@@ -1,8 +1,11 @@
+const fs = require('fs');
+
 function checksettings(){
     const electron = require('electron');
     const {ipcRenderer} = electron;
 
     const fs = require('fs');
+    fs.open()
     let rawdata = fs.readFileSync('settings.json');
     let data = JSON.parse(rawdata);
     let settings = data["settings"];
@@ -28,11 +31,29 @@ validatesettings('3ee4ea82-d2a4-43bc-bbf1-8b62cfdb7e14');
 
 async function verifyToken(key) {
     try {
-        const a = await fetch(`https://api.hypixel.net/key?key=${key}`);
-        if(a) localStorage.setItem('key', key);
-        
+        const check = await fetch(`https://api.hypixel.net/key?key=${key}`);
+        document.getElementById('key').remove()
+        if(check) {
+            localStorage.setItem('key', key);
+            const {ipcRenderer} = require('electron');
+            ipcRenderer.send('set')
+
+        } else {
+            alert('')
+        }alert('')
     } catch {
 
     }
 
+}
+
+async function test(){
+    const client = document.getElementById('client');
+    let path;
+    switch(client){
+        case "Vanilla/Forge Client":
+            path = 
+        default:
+
+    }
 }
