@@ -1,30 +1,20 @@
-localStorage.setItem('key', '8ac664c4-42af-4c52-9938-c8d7c82dcf6c');
-
-const fetch = require('node-fetch');
-const {MongoClient} = require('mongodb');
 
 async function getPlayer(input, type){
-    console.log('called!!!');
     try {
-        console.log(`${type}=${input}`);
         const key = localStorage.getItem('key');
         const req = await fetch(`https://api.hypixel.net/player?${type}=${input}&key=${key}`);
         const res = await req.json();
-        console.log(res);
         if(!res) return;
         if(res.success && res.player !== null){
             const data = await compileStats(res.player);
-            console.log(data);
             addStatsToDisplay(data);
             cache.push(data);
-            const id = await compileProfile(player, res.player.uuid)
-            ids.push(id)
+            const id = await compileProfile(input, type, res.player.uuid);
         } else if(res.success){
-            const data = { name:player, date:Date.now(), type:"nick" };
-            addStatsToDisplay(data);
-            cache.push(data);
-            const id = await compileProfile(player);
-            ids.push(id);
+            console.log('NICK');
+            addTagToDisplay(input, "N");
+            console.log(data);
+            const id = await compileProfile(input, type);
         } else if (!res.success &&
             res.cause === "Invalid API key") { //
         }
@@ -32,20 +22,22 @@ async function getPlayer(input, type){
     } 
 }
 
-async function compileProfile(player, uuid){
-    let data;
+async function compileProfile(input, type, uuid){
+    if(type !== "name") return;
+    let data = "";
     if(uuid){
         data = {
-            name:player,
+            name:input,
             uuid:uuid,
             type:"real"
         }
     } else {
         data = {
-            name:player,
+            name:input,
             type:"nick"
         }
     }
+    ids.push(data);
     return data;
 }
 
@@ -54,18 +46,18 @@ async function compileStats(data){
     const name = data.displayname;
     const date = Date.now();
     const session = ((((date - data.lastLogin))/1000)/60).toFixed(1) ?? 0;
-    const star = data.achievements.bedwars_level;
+    const star = data.achievements.bedwars_level ?? 0;
     const kdr = (data.stats.Bedwars.kills_bedwars/
         data.stats.Bedwars.deaths_bedwars).toFixed(2) ?? 0;
-    const fkills = data.stats.Bedwars.final_kills_bedwars;
-    const fdeaths = data.stats.Bedwars.final_deaths_bedwars;
+    const fkills = data.stats.Bedwars.final_kills_bedwars ?? 0;
+    const fdeaths = data.stats.Bedwars.final_deaths_bedwars ?? 0;
     const fkdr = (fkills/fdeaths).toFixed(2) ?? 0;
-    const wins = data.stats.Bedwars.wins_bedwars;
-    const losses = data.stats.Bedwars.losses_bedwars;
+    const wins = data.stats.Bedwars.wins_bedwars ?? 0;
+    const losses = data.stats.Bedwars.losses_bedwars ?? 0;
     const wlr = (wins/losses).toFixed(2) ?? 0;
     const bblr = (data.stats.Bedwars.beds_broken_bedwars/
         data.stats.Bedwars.beds_lost_bedwars).toFixed(2) ?? 0;
-    const ws = data.stats.Bedwars.winstreak; 
+    const ws = data.stats.Bedwars.winstreak ?? 0; 
     return {
         type:type,date:date, name:name, session:session, 
         star:star, ws:ws, kdr:kdr, fkills:fkills, 
@@ -86,6 +78,7 @@ async function getBwstatsTag(player){
 }
 
 async function checkBlacklisted(player){
+    console.log('called');
     const uri = 'mongodb+srv://overlaytestuser1:ohdare321@overlay.stfwe.mongodb.net/overlay?retryWrites=true&w=majority';
     const client = new MongoClient(uri);
     try {
@@ -95,6 +88,7 @@ async function checkBlacklisted(player){
         const result = await client.db("overlay").collection("blacklist").findOne({
         UUID: id
         });
+
         if(result) showBlacklisted(player);
     } catch {
     } finally {
@@ -106,7 +100,8 @@ async function getPlayerId(player){
     try {
         const req = await fetch(`https://playerdb.co/api/player/minecraft/${player}`)
         const res = await req.json();
-        if(res.success) return parse.data.player.raw_id;
+
+        if(res.success) return res.data.player.raw_id;
     } catch {
     }
 }

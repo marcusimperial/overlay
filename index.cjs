@@ -66,7 +66,7 @@ function createAddWindow(){
     });
   }
 
-ipcMain.on('ok', (e,item) => {
+ipcMain.on('nosettings', (e,item) => {
     console.log(item);
     createAddWindow();
   

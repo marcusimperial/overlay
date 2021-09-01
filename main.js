@@ -1,6 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-const readLastLines = require('read-last-lines');
 
 var counter = 0;
 var players = [];
@@ -10,8 +7,9 @@ let ids = [];
 setInterval(clearCache, 1000);
 setInterval(sortTable, 20);
 
-const path3 = path.relative("C://Users","..//..//");
-const filepath = `C:/Users/${path3}/AppData/Roaming/.minecraft/logs/latest.log`;
+const filepath = localStorage.getItem('path');
+console.log(filepath);
+console.log('listening STARTED');
 fs.watchFile(filepath, {interval:0}, async () => {
     readLastLines.read(filepath, 10)
 	.then((lines) => {
@@ -32,7 +30,6 @@ async function analyzeLine(latest){
             deletePlayer(player);
         } else if(latest.includes(' ONLINE: ')){
             let list = latest.split(" [CHAT] ONLINE: ")[1].split('\r')[0].split('\uFFFD')[0].split(", ");
-            console.log(list);
             list.forEach(player => {addPlayer(player)})
         } else if(latest.includes('Sending you to mini')){
             counter = 0;

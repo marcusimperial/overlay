@@ -1,59 +1,48 @@
-const fs = require('fs');
-
-function checksettings(){
-    const electron = require('electron');
-    const {ipcRenderer} = electron;
-
-    const fs = require('fs');
-    fs.open()
-    let rawdata = fs.readFileSync('settings.json');
-    let data = JSON.parse(rawdata);
-    let settings = data["settings"];
-
-    if(settings == ""){
-        ipcRenderer.send('nosettings')
-    } else {
-        validatesettings(data["settings"]["apikey"], data["settings"]["client"])
-    }
+async function saveSettings(){
+    console.log('called');
+    const key = await verifyToken();
+    const filepath = await verifyClient();
+    console.log(key);
+    console.log(filepath);
+    if(key && filepath) console.log('set');
+    else alert("ERROR: Key is bad or filepath does not exist.");
 }
 
-function verifySettings(key, client){
-    const https = require('fs');
-
-    import fs from 'fs';
-    fs.fstatSync
-    
-    var ok = fetch(`https://api.hypixel.net/key?key=${key}`).then(res => res.json());
-        console.log(ok);
-}
-validatesettings('3ee4ea82-d2a4-43bc-bbf1-8b62cfdb7e14');
-
-
-async function verifyToken(key) {
+async function verifyToken(){
     try {
-        const check = await fetch(`https://api.hypixel.net/key?key=${key}`);
-        document.getElementById('key').remove()
-        if(check) {
+        const key = document.getElementById('key').value;
+        console.log(key);
+        const req = await fetch(`https://api.hypixel.net/key?key=${key}`);
+        console.log(req);
+        const res = await req.json();
+        console.log(res);
+        if(res.success) {
             localStorage.setItem('key', key);
-            const {ipcRenderer} = require('electron');
-            ipcRenderer.send('set')
-
-        } else {
-            alert('')
-        }alert('')
+            return true;
+        } else return false;
     } catch {
-
+        return false
     }
-
 }
 
-async function test(){
-    const client = document.getElementById('client');
-    let path;
-    switch(client){
-        case "Vanilla/Forge Client":
-            path = 
-        default:
-
+async function verifyClient(){
+    try {
+        const client = document.getElementById('client').value;
+        let filepath = `C:/Users/${path.relative("C://Users","..//..//")}`;
+        let vf = "/AppData/Roaming/.minecraft/logs/latest.log";
+        let lc = "/.lunarclient/offline/files/1.8/logs/latest.log";
+        if(client === "Vanilla/Forge Client") filepath += vf;
+        else if(client ==="Lunar Client") filepath += lc;
+        console.log(filepath);
+        const check = fs.openSync(filepath, 'r');
+        if(check) {
+            console.log('true!');
+            localStorage.setItem('path', filepath);
+            return true;
+        } else return false;
+    } catch {
+        return false;
     }
+
+
 }

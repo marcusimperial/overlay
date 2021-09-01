@@ -24,22 +24,38 @@
         }
     </style>
     <script>
-        console.log(localStorage.getItem('ok'));
-        async function test(){
-            localStorage.setItem('ok', 'HEY TEST');
 
+        async function test2(){
+            let a = localStorage.getItem('key');
+            let b = localStorage.getItem('filepath');
+            console.log(`${a} ${b}`);
+        }
+        async function test(){
             const electron = require('electron');
         const {ipcRenderer} = electron;
-        ipcRenderer.send('ok');
+        ipcRenderer.send('nosettings');
         }
 
-        document.getElementById('overlay').insertRow(0).id = 's';
     </script>
+        <script>
+            var windowTopBar = document.createElement('div')
+            windowTopBar.style.width = "100%"
+            windowTopBar.style.height = "20px"
+            windowTopBar.style.backgroundColor = "transparent"
+            windowTopBar.style.position = "absolute"
+            windowTopBar.style.top = windowTopBar.style.left = 0
+            windowTopBar.style.webkitAppRegion = "drag"
+            document.body.appendChild(windowTopBar)
+                </script>
     <body>
-        <h1>test test test test test</h1>
-        <input type="text" id="1">
-        <input type="button" id="submit" value="SUBMIT" onclick='test()'>
-        <label id="2">sdadasd</label>
+        <div style="margin-top: 20px;"></div>
+        <input type='text' id="key">
+        <select id="client">
+            <option>Vanilla/Forge Client</option>
+            <option>Lunar Client</option>
+        </select>
+        <input type='button' id='save' value='Save Settings' onclick='saveSettings()'>
+        <input type='button' id='save' value='test' onclick='test2()'>
         <table>
             <thead>
                 <tr>
@@ -61,8 +77,8 @@
             <tbody id='overlay'>
             </tbody>
         </table>
-
-
+    <script src='imports.js'></script>
+    <script src='settings.js'></script>
     <script src='process.js'></script>
     <script src='display.js'></script>
     <script src='system.js'></script>

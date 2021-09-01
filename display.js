@@ -37,6 +37,7 @@ async function addPlayerToDisplay(player){
 
     row.id = player;
     c0.innerText = player;
+    c0.id = `${player}-ign`;
     c1.id = `${player}-star`;
     c2.id = `${player}-tag`;
     c3.id = `${player}-ws`;
@@ -52,7 +53,8 @@ async function addPlayerToDisplay(player){
 }
 
 async function addStatsToDisplay (data){ //ADDING PLAYER STATS
-    if(data.type === 'nick') {
+    if(data.type === "nick") {
+        console.log('NICKKK DERECTED DISPLAYING');
         document.getElementById(`${data.name}-star`).innerText = "NICKED";
     } else {
         document.getElementById(`${data.name}-star`).innerText = data.star;
@@ -70,8 +72,12 @@ async function addStatsToDisplay (data){ //ADDING PLAYER STATS
 }
 
 async function addTagToDisplay(player, tag){
-    const cell2 = document.getElementById(`${player}-tag`);
-    cell2.innerHTML = tag;
+    console.log(tag);
+    const cell = document.getElementById(`${player}-tag`);
+    console.log(cell.innerText);
+    if(cell.innerText) {
+        cell.innerText = `${cell.innerText}+${tag}`
+    } else cell.innerText = tag;
 }
 
 
@@ -83,6 +89,6 @@ async function resetDisplay(){
 
 async function showBlacklisted(player){
     //MAKE ROW RED INSTEAD
-    const cell0 = document.getElementById(player); 
+    const cell0 = document.getElementById(`${player}-ign`); 
     cell0.style.color = 'red';
 }

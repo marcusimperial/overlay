@@ -2,14 +2,12 @@ async function clearCache(){
     const timeout = 10000; //ms
     for(let i=0; i<cache.length; i++){
         if(Date.now() >= cache[i].date + timeout) {
-            console.log(`Cleared for ${cache[i].name}`)
             cache.splice(i, 1)
         }
     }
 }
 
 async function addPlayer(player){
-    console.log('called');
     if(players.indexOf(player) === -1) {
         players.push(player);
         addPlayerToDisplay(player);
@@ -19,8 +17,9 @@ async function addPlayer(player){
         if(data) addStatsToDisplay(data);
         else {
             const data = ids.find((obj) => obj.name === player);
-            if(data) getPlayer(data.id, "uuid");
-            else getPlayer(player, "name")
+            if(data && data.type === "real") getPlayer(data.uuid, "uuid");
+            else if(data && data.type === "nick") addTagToDisplay(player, "N");
+            else getPlayer(player, "name");
         }
     }
 }
