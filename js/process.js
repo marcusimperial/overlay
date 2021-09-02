@@ -11,10 +11,12 @@ async function getPlayer(input, type){
             cache.push(data);
             const id = await compileProfile(input, type, res.player.uuid);
         } else if(res.success){
-            console.log('NICK');
+            console.log('A NICK WAS DETECTED');
             addTagToDisplay(input, "N");
-            console.log(data);
             const id = await compileProfile(input, type);
+            console.log(type);
+            console.log(id);
+            ids.push(id);
         } else if (!res.success &&
             res.cause === "Invalid API key") { //
         }
@@ -24,6 +26,7 @@ async function getPlayer(input, type){
 
 async function compileProfile(input, type, uuid){
     if(type !== "name") return;
+    console.log(type);
     let data = "";
     if(uuid){
         data = {
@@ -37,7 +40,7 @@ async function compileProfile(input, type, uuid){
             type:"nick"
         }
     }
-    ids.push(data);
+    console.log(data);
     return data;
 }
 

@@ -2,19 +2,18 @@ const electron = require('electron');
 const path = require('path');
 const url = require('url');
 const {app, BrowserWindow, Menu, ipcMain} = electron;
-
 // SET ENV
 process.env.NODE_ENV = 'development';
-
-
 
 let mainWindow;
 let addWindow;
 
-// Listen for app to be ready
-app.on('ready', () => {
+function createWindow() {
+
+}
+function createWindow() {
   // Create new window
-  const { width } = electron.screen.getPrimaryDisplay().workAreaSize
+  const { width } = electron.screen.getPrimaryDisplay().workAreaSize;
 
   mainWindow = new BrowserWindow({
     width: 750,
@@ -22,7 +21,7 @@ app.on('ready', () => {
     transparent: true,
     x: width - 750,
     y: 23,
-    frame: true,
+    frame: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
@@ -31,15 +30,15 @@ app.on('ready', () => {
   // Load html in window
   mainWindow.setAlwaysOnTop(true, 'floating');
   mainWindow.setVisibleOnAllWorkspaces(true);
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'mainWindow.html'),
-    protocol: 'file:',
-    slashes:true
-  }));
+  mainWindow.loadFile('index.html');
 
   mainWindow.on('closed', () => {
       app.quit();
   })
+}
+// Listen for app to be ready
+app.on('ready', () => {
+
 
   const mainMenu = Menu.buildFromTemplate(mainmenutemplate);
   Menu.setApplicationMenu(mainMenu)

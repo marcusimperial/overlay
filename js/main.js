@@ -1,10 +1,16 @@
+const fetch = require('node-fetch');
+const fs = require('fs');
+const readLastLines = require('read-last-lines');
+const path = require('path');
+const {MongoClient} = require('mongodb');
+const { ipcRenderer } = require('electron');
 
 var counter = 0;
 var players = [];
 let cache = [];
 let ids = [];
 
-setInterval(clearCache, 1000);
+setInterval(clearCaches, 1000);
 setInterval(sortTable, 20);
 
 const filepath = localStorage.getItem('path');

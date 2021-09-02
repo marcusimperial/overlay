@@ -1,9 +1,12 @@
 {
   "name": "overlay",
   "version": "1.0.0",
-  "description": "sdad",
-  "main": "index.cjs",
-  "type": "module",
+  "description": "overlay",
+  "main": "index.js",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/marcusimperial/overlay.git"
+  },
   "scripts": {
     "start": "electron .",
     "build-installer": "electron-builder"
@@ -36,14 +39,13 @@
   "author": "dare",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.1",
+    "electron-updater": "^4.3.9",
     "mongodb": "^4.0.1",
     "node-fetch": "^2.6.1",
     "read-last-lines": "^1.8.0"
   },
   "devDependencies": {
     "electron": "^13.1.4",
-    "electron-builder": "^22.11.7",
-    "node-key-sender": "^1.0.11"
+    "electron-builder": "^22.11.7"
   }
 }
