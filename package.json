@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "electron .",
-    "build-installer": "electron-builder"
+    "build-installer": "electron-builder",
+    "deploy": "electron-builder build --mac --win --publish always"
   },
   "build": {
     "appId": "cool-app",
