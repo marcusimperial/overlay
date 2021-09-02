@@ -4,8 +4,8 @@
   "description": "overlay",
   "main": "index.js",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/marcusimperial/overlay.git"
+    "type": "git",
+    "url": "https://github.com/marcusimperial/overlay.git"
   },
   "scripts": {
     "start": "electron .",
