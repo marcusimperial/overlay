@@ -1,6 +1,6 @@
 {
   "name": "overlay",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "overlay",
   "main": "index.js",
   "repository": {
@@ -17,7 +17,8 @@
     "publish": [{
       "provider": "github",
       "owner": "marcusimperial",
-      "repo": "overlay"
+      "repo": "overlay",
+      "token":"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"
     }],
     "win": {
       "target": [
