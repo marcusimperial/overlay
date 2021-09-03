@@ -22,6 +22,7 @@ function createWindow() {
     mainWindow.loadFile('index.html');
     mainWindow.once('ready-to-show', () => {
         autoUpdater.checkForUpdatesAndNotify();
+        console.log('UPDATE AVAILABLE')
       });
     mainWindow.on('closed', () => {
         app.quit();
@@ -46,6 +47,7 @@ ipcMain.on('app_version', (event) => {
 });
 
 autoUpdater.on('update-available', () => {
+    console.log('update available!');
     mainWindow.webContents.send('update_available');
 });
 
