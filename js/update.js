@@ -16,3 +16,14 @@ ipcRenderer.on('update_downloaded', () => {
   ipcRenderer.send('restart_app');
 });
 
+ipcRenderer.on('checking-for-update', () => {
+  ipcRenderer.removeAllListeners('checking-for-update');
+  alert('checking for update...');
+})
+
+ipcRenderer.on('update-not-available', () => {
+  ipcRenderer.removeAllListeners('update-not-available');
+  alert('this update is not available!');
+})
+
+

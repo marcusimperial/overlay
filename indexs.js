@@ -1,116 +1,64 @@
 const electron = require('electron');
-const path = require('path');
-const url = require('url');
-const {app, BrowserWindow, Menu, ipcMain} = electron;
+const {app, BrowserWindow , ipcMain} = electron;
+const { autoUpdater } = require('electron-updater');
 // SET ENV
-process.env.NODE_ENV = 'development';
-
 let mainWindow;
-let addWindow;
-
 function createWindow() {
-
-}
-function createWindow() {
-  // Create new window
-  const { width } = electron.screen.getPrimaryDisplay().workAreaSize;
-
-  mainWindow = new BrowserWindow({
-    width: 750,
-    height: 700,
-    transparent: true,
-    x: width - 750,
-    y: 23,
-    frame: false,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
-  }
-  });
-  // Load html in window
-  mainWindow.setAlwaysOnTop(true, 'floating');
-  mainWindow.setVisibleOnAllWorkspaces(true);
-  mainWindow.loadFile('index.html');
-
-  mainWindow.on('closed', () => {
-      app.quit();
-  })
-}
-// Listen for app to be ready
-app.on('ready', () => {
-
-
-  const mainMenu = Menu.buildFromTemplate(mainmenutemplate);
-  Menu.setApplicationMenu(mainMenu)
-})
-
-function createAddWindow(){
-    addWindow = new BrowserWindow({
-      webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false
-      },
-      width: 300,
-      height:200,
-      title:'Add Shopping List Item'
-    });
-    addWindow.loadURL(url.format({
-      pathname: path.join(__dirname, '/client/settings.html'),
-      protocol: 'file:',
-      slashes:true
-    }));
-    // Handle garbage collection
-    addWindow.on('close', () => {
-      addWindow = null;
-    });
-  }
-
-ipcMain.on('nosettings', (e,item) => {
-    console.log(item);
-    createAddWindow();
-  
-
-})
-
-const mainmenutemplate = [
-    {
-        label:'file',
-        submenu :[
-            {
-                label: 'quit applciation',
-                accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
-                click(){
-                    app.quit();
-                }
-            },
-            {
-                label:'testfunction',
-                click(){
-                    createAddWindow()
-                }
-            }
-        ]
-    }
-];
-
-if(process.platform == 'darwin'){
-    mainmenutemplate.unshift({})
-}
-
-if(process.env.NODE_ENV !== 'production'){
-    mainmenutemplate.push({
-      label: 'Developer Tools',
-      submenu:[
-        {
-          role: 'reload'
-        },
-        {
-          label: 'Toggle DevTools',
-          accelerator:process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
-          click(item, focusedWindow){
-            focusedWindow.toggleDevTools();
-          }
+    const {width} = electron.screen.getPrimaryDisplay().workAreaSize;
+    mainWindow = new BrowserWindow({
+        width: 750,
+        height:700,
+        transparent: true,
+        x: width - 750,
+        y: 23,
+        frame: true,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
         }
-      ]
     });
+    mainWindow.setAlwaysOnTop(true, 'floating');
+    mainWindow.setVisibleOnAllWorkspaces(true);
+    mainWindow.loadFile('index.html');
+    mainWindow.once('ready-to-show', () => {
+        autoUpdater.checkForUpdatesAndNotify();
+        console.log('UPDATE AVAILABLE')
+      });
+    mainWindow.on('closed', () => {
+        app.quit();
+    })
 }
+
+app.on('ready', createWindow);
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+});
+  
+app.on('activate', () => {
+    if (mainWindow === null) {
+      createWindow();
+    }
+});
+  
+ipcMain.on('app_version', (event) => {
+    event.sender.send('app_version', { version: app.getVersion() });
+});
+
+autoUpdater.on('checking-for-update', () => {
+    mainWindow.webContents.send('checking-for-update');
+})
+
+autoUpdater.on('update-available', () => {
+    console.log('update available!');
+    mainWindow.webContents.send('update_available');
+});
+
+autoUpdater.on('update-downloaded', () => {
+    mainWindow.webContents.send('update_downloaded');
+});
+
+ipcMain.on('restart_app', () => {
+    autoUpdater.quitAndInstall();
+  });
