@@ -3,8 +3,8 @@ const fs = require('fs');
 const readLastLines = require('read-last-lines');
 const path = require('path');
 const {MongoClient} = require('mongodb');
-const { ipcRenderer } = require('electron');
-
+const { ipcRenderer, app } = require('electron');
+console.log(app.getPath('home'));
 var counter = 0;
 var players = [];
 let cache = [];

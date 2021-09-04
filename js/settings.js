@@ -32,7 +32,8 @@ async function verifyClient(){
         let vf = "/AppData/Roaming/.minecraft/logs/latest.log";
         let lc = "/.lunarclient/offline/files/1.8/logs/latest.log";
         if(client === "Vanilla/Forge Client") filepath += vf;
-        else if(client ==="Lunar Client") filepath += lc;
+        else if(client ===  "Lunar Client") filepath += lc;
+        else filepath += vf;
         console.log(filepath);
         const check = fs.openSync(filepath, 'r');
         if(check) {
@@ -43,6 +44,6 @@ async function verifyClient(){
     } catch {
         return false;
     }
-
-
 }
+
+console.log(app.getPath('home'));

@@ -3,6 +3,11 @@ const {app, BrowserWindow , ipcMain} = electron;
 const { autoUpdater } = require('electron-updater');
 // SET ENV
 let mainWindow;
+
+function sendStatusToWindow(text) {
+    mainWindow.webContents.send('message', text);
+}
+
 function createWindow() {
     const {width} = electron.screen.getPrimaryDisplay().workAreaSize;
     mainWindow = new BrowserWindow({
@@ -41,27 +46,34 @@ app.on('activate', () => {
       createWindow();
     }
 });
-  
+console.log(app.getPath("home"));
 ipcMain.on('app_version', (event) => {
     event.sender.send('app_version', { version: app.getVersion() });
 });
 
 autoUpdater.on('checking-for-update', () => {
-    mainWindow.webContents.send('checking-for-update');
-})
-
+    sendStatusToWindow('Checking for update...');
+  })
 autoUpdater.on('update-available', () => {
-    console.log('update available!');
-    mainWindow.webContents.send('update_available');
-});
-autoUpdater.on('update-not-available', () => {
-    mainWindow.webContents.send('update-not-available');
-});
-
+    sendStatusToWindow('Update available.');
+})
+autoUpdater.on('update-not-available', (info) => {
+    sendStatusToWindow('Update not available.');
+})
+autoUpdater.on('error', (err) => {
+    sendStatusToWindow('Error in auto-updater. ' + err);
+  })
+  autoUpdater.on('download-progress', (progressObj) => {
+    let log_message = "Download speed: " + progressObj.bytesPerSecond;
+    log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+    log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+    sendStatusToWindow(log_message);
+  })
 autoUpdater.on('update-downloaded', () => {
-    mainWindow.webContents.send('update_downloaded');
+    mainWindow.webContents.send('update-downloaded');
 });
 
-ipcMain.on('restart_app', () => {
+ipcMain.on('restart-app', () => {
     autoUpdater.quitAndInstall();
-  });
+});
+
