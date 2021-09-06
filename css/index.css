@@ -1,7 +1,8 @@
 body {
   font-family: "Roboto", sans-serif;
-  font-size: 10px;
+  font-size: 20px;
   background: rgba(0, 0, 0, 0.5);
+  color: white;
 }
 table,
 td,
@@ -24,4 +25,35 @@ html {
   -webkit-user-select: none;
   min-height: 100%;
   height: 100%;
+}
+
+/**LOADER**/
+
+.update-label {
+  text-align: center;
+  display: block;
+  margin: auto;
+  color: #efecec;
+  font-size: 30px;
+}
+
+.loader {
+  text-align: center;
+  display: block;
+  margin: auto;
+  border: 10px solid #f3f3f3; /* Light grey */
+  border-top: 10px solid black; /* Blue */
+  border-radius: 50%;
+  width: 125px;
+  height: 125px;
+  animation: spin 500ms linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

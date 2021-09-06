@@ -17,10 +17,10 @@ async function getPlayer(input, type){
             console.log(type);
             console.log(id);
             ids.push(id);
-        } else if (!res.success &&
-            res.cause === "Invalid API key") { //
+        } else if (!res.success && res.cause === "Invalid API key") { //
         }
     } catch {
+        if(type === "name") getPlayer(await getPlayerId(input), )
     } 
 }
 

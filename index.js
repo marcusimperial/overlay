@@ -16,7 +16,7 @@ function createWindow() {
         transparent: true,
         x: width - 750,
         y: 23,
-        frame: true,
+        frame: false,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
@@ -46,34 +46,28 @@ app.on('activate', () => {
       createWindow();
     }
 });
-console.log(app.getPath("home"));
-ipcMain.on('app_version', (event) => {
-    event.sender.send('app_version', { version: app.getVersion() });
+ipcMain.on('app-version', (event) => {
+    event.sender.send('app-version', { version: app.getVersion() });
 });
 
-autoUpdater.on('checking-for-update', () => {
-    sendStatusToWindow('Checking for update...');
-  })
+autoUpdater.on('update-not-available', () => {
+    mainWindow.webContents.send('update-not-available');
+});
+
 autoUpdater.on('update-available', () => {
-    sendStatusToWindow('Update available.');
-})
-autoUpdater.on('update-not-available', (info) => {
-    sendStatusToWindow('Update not available.');
-})
-autoUpdater.on('error', (err) => {
-    sendStatusToWindow('Error in auto-updater. ' + err);
-  })
-  autoUpdater.on('download-progress', (progressObj) => {
-    let log_message = "Download speed: " + progressObj.bytesPerSecond;
-    log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
-    log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
-    sendStatusToWindow(log_message);
-  })
+    mainWindow.webContents.send('update-available');
+});
+autoUpdater.on('download-progress', (obj) => {
+    mainWindow.webContents.send('download-progress', obj.percent);
+});
 autoUpdater.on('update-downloaded', () => {
     mainWindow.webContents.send('update-downloaded');
 });
+autoUpdater.on('error', () => {
+    mainWindow.webContents.send('error');
+})
 
-ipcMain.on('restart-app', () => {
+ipcMain.on('restart', () => {
     autoUpdater.quitAndInstall();
 });
 

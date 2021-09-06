@@ -5,34 +5,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/index.css">
     <body>
-        
-        <label id='version'></label>
+        <div id='version'></div>
         <br>
-        <input type='text' id="key" style="-webkit-app-region: no-drag" >
-        <select id="client" style="-webkit-app-region: no-drag">
-            <option>Vanilla/Forge Client</option>
-            <option>Lunar Client</option>
-        </select>
-        <input type='button' id='save' value='Save Settings' onclick='saveSettings()'>
-        <input type='button' id='save' value='test' onclick='test2()'>
+        <div id="settings"></div>
         <div id="table"></div>
-
-        <div id="messages" style="font-size:40px">TESTTESTTEST</div>
-        <div id="notification" class="hidden">
-            <p id="message"></p>
-            <button id="close-button" onclick="closeNotification()">
-              Close
-            </button>
-            <button id="restart-button" onclick="restartApp()" class="hidden">
-              Restart
-            </button>
-        </div>
+        <script src='./js/imports.js'></script>
         <script src='./js/init.js'></script>
+        <script src='./js/update.js'></script>
+        <script src='./js/settings.js'></script>
+        <script src='./js/main.js'></script>
         <script src='./js/display.js'></script>
         <script src='./js/system.js'></script>
-        <script src='./js/main.js'></script>
-        <script src='./js/settings.js'></script>
         <script src='./js/process.js'></script>
-        <script src='./js/update.js'></script>
     </body>
+    
 </html>

@@ -1,27 +1,26 @@
 {
   "name": "overlay",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "main": "index.js",
   "author": "dare",
+  "description": "overlay",
   "license": "ISC",
   "scripts": {
     "start": "electron .",
-    "build-installer": "electron-builder",
-    "deploy": "electron-builder"
+    "build": "electron-builder"
   },
   "build": {
     "appId": "com.dare.overlay",
     "productName":"overlay",
     "publish": [{
       "provider": "generic",
-      "url": "https://overlayy.as.r.appspot.com/"
+      "url": "https://storage.googleapis.com/overlayy/"
     }],
     "win": {
-      "target": ["nsis"],
-      "icon": "assets/icons/win/icon.ico"
+      "target": ["nsis"]
     },
     "nsis": {
-      "installerIcon": "assets/icons/win/icon.ico",
+      "artifactName":"overlaysetup.exe",
       "oneClick": true,
       "allowToChangeInstallationDirectory": false
     }

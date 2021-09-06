@@ -1,20 +1,32 @@
+ipcRenderer.send('app-version');
 
+ipcRenderer.on('app-version', (event, arg) => {
+  ipcRenderer.removeAllListeners('app-version');
+  document.getElementById('version').innerText = arg.version;
+}); 
 
-ipcRenderer.send('app_version');
-ipcRenderer.on('app_version', (event, arg) => {
-  ipcRenderer.removeAllListeners('app_version');
-  alert(arg.version);
-  alert("HI THIS IS AN UPDATED VERSION");
-});  
+ipcRenderer.on('update-available', () => {
+  ipcRenderer.removeAllListeners('update-available');
+  callLoader();
+});
 
-ipcRenderer.on('message', (event, text) => {
-  var container = document.getElementById('messages');
-  var message = document.createElement('div');
-  message.innerHTML = text;
-  container.appendChild(message);
+ipcRenderer.on('download-progress', (event, percent) => {
+  displayStatus(`${percent.toFixed(2) || 0}%`);
 });
 
 ipcRenderer.on('update-downloaded', () => {
-  alert('updated successfully downlaoded! restarting the application');
-  ipcRenderer.send('restart-app');
+  ipcRenderer.removeAllListeners('update-downloaded');
+  displayStatus("Download Complete! Restarting Application...")
+  ipcRenderer.send('restart');
 });
+
+ipcRenderer.on('error', () => {
+  ipcRenderer.removeAllListeners('error');
+  displayStatus("An Error Occured! Relaunching Application...")
+  ipcRenderer.send('restart');
+});
+
+async function displayStatus(status) {
+  const label = document.getElementById('info');
+  label.innerText = status;
+}

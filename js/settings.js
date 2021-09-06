@@ -1,3 +1,4 @@
+document.getElementById('save').addEventListener('click', saveSettings);
 async function saveSettings(){
     console.log('called');
     const key = await verifyToken();
@@ -7,6 +8,8 @@ async function saveSettings(){
     if(key && filepath) console.log('set');
     else alert("ERROR: Key is bad or filepath does not exist.");
 }
+
+verifyClient();
 
 async function verifyToken(){
     try {
@@ -34,16 +37,14 @@ async function verifyClient(){
         if(client === "Vanilla/Forge Client") filepath += vf;
         else if(client ===  "Lunar Client") filepath += lc;
         else filepath += vf;
-        console.log(filepath);
         const check = fs.openSync(filepath, 'r');
         if(check) {
-            console.log('true!');
             localStorage.setItem('path', filepath);
+            console.log(localStorage.getItem('path'));
             return true;
         } else return false;
-    } catch {
+    } catch (err) {
+        console.log(err);
         return false;
     }
 }
-
-console.log(app.getPath('home'));

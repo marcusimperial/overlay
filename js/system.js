@@ -1,3 +1,4 @@
+setInterval(clearCaches, 1000);
 async function clearCaches(){
     const timeout = 10000; //ms
     for(let i=0; i<cache.length; i++){

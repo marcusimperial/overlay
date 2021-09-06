@@ -1,3 +1,4 @@
+setInterval(sortTable, 20);
 async function sortTable() { //SORTING THE TABLE
     var table, rows, i, x, y;
     table = document.getElementById("overlay");
