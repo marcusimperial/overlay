@@ -2,7 +2,7 @@
   "name": "overlay",
   "version": "0.1.0",
   "main": "index.js",
-  "author": "dare",
+  "author": "",
   "description": "overlay",
   "license": "ISC",
   "scripts": {
@@ -10,22 +10,27 @@
     "build": "electron-builder"
   },
   "build": {
-    "appId": "com.dare.overlay",
-    "productName":"overlay",
-    "publish": [{
-      "provider": "generic",
-      "url": "https://storage.googleapis.com/overlayy/"
-    }],
+    "appId": "com.app.overlay",
+    "productName": "overlay",
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "https://storage.googleapis.com/overlayy/"
+      }
+    ],
     "win": {
-      "target": ["nsis"]
+      "target": [
+        "nsis"
+      ]
     },
     "nsis": {
-      "artifactName":"overlaysetup.exe",
+      "artifactName": "overlaysetup.exe",
       "oneClick": true,
       "allowToChangeInstallationDirectory": false
     }
   },
   "dependencies": {
+    "dotenv": "^16.1.2",
     "electron-updater": "^4.3.9",
     "mongodb": "^4.0.1",
     "node-fetch": "^2.6.1",

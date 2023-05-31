@@ -71,7 +71,7 @@ async function compileStats(data){
 
 async function getBwstatsTag(player){
     try {
-        const req = await fetch(`http://db.dfg87dcbvse44.xyz:8080/?playerv5=${player}`);
+        const req = await fetch(`${process.env.OVERLAY_PRIVATE_API_ROUTE}=${player}`);
         const res = await req.text();
         const clean = res.toLowerCase().replace(/'/g,'"'); 
         const data = JSON.parse(clean);
@@ -81,8 +81,7 @@ async function getBwstatsTag(player){
 }
 
 async function checkBlacklisted(player){
-    console.log('called');
-    const uri = 'mongodb+srv://overlaytestuser1:ohdare321@overlay.stfwe.mongodb.net/overlay?retryWrites=true&w=majority';
+    const uri = process.env.OVERLAY_MONGODB_URI;
     const client = new MongoClient(uri);
     try {
         await client.connect();

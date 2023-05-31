@@ -4,15 +4,11 @@ const { autoUpdater } = require('electron-updater');
 // SET ENV
 let mainWindow;
 
-function sendStatusToWindow(text) {
-    mainWindow.webContents.send('message', text);
-}
-
 function createWindow() {
     const {width} = electron.screen.getPrimaryDisplay().workAreaSize;
     mainWindow = new BrowserWindow({
         width: 750,
-        height:700,
+        height: 700,
         transparent: true,
         x: width - 750,
         y: 23,
